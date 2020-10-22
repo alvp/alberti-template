@@ -31,6 +31,7 @@ logging.info("Experiment '{}', (eval_df = {}, pid = {})".format(
     TAG, MODELNAME, str(os.getpid()),
 ))
 
+
 # Utils
 def clean_text(string):
     output = string.strip()
@@ -38,7 +39,7 @@ def clean_text(string):
     replacements = (
       ("“", ''), ("”", ''), ("//", ""), ("«", ''), ("»", ''), (",", ''),
       (";", ''), (".", ''),
-    #   ("?", ''), ("¿", ''), ("¡", ''), ("!", ''), ("-", ' '),
+        # ("?", ''), ("¿", ''), ("¡", ''), ("!", ''), ("-", ' '),
     )
     for replacement in replacements:
         output = output.replace(*replacement)
