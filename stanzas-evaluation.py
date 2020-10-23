@@ -92,7 +92,7 @@ def train_model(train_df, num_labels):
             'eval_batch_size': 8 if "large" in model_name else 32,
             # Doubles train_batch_size, but gradients and weights are calculated once every 2 steps
             'gradient_accumulation_steps': 2 if "large" in model_name else 1,
-            'max_seq_length': 512,
+            'max_seq_length': 256,
             'sliding_window': False,
             'wandb_project': model_output.split("/")[-1],
             # "adam_epsilon": 3e-5,  # 1e-8
