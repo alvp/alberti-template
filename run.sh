@@ -1,6 +1,6 @@
 #!/bin/bash
 # TERM=xterm-256color
-# curl -o run.sh -q https://raw.githubusercontent.com/alvp/alberti-template/master/run.sh
+# curl -o run.sh -q https://raw.githubusercontent.com/alvp/alberti-template/main/run.sh
 # chmod +x run.sh
 
 
@@ -26,13 +26,13 @@ if [ -z "${NODEPS}" ]; then
     sudo apt-get install -y jq byobu git
     sudo apt-get install -y nfs-common
     pip install -qU pip
-    pip install -r https://raw.githubusercontent.com/alvp/alberti-template/master/requirements.txt
+    pip install -r https://raw.githubusercontent.com/alvp/alberti-template/main/requirements.txt
     wandb login
 fi
 
 if [ -n "${TAG}" ]; then
     sudo mkdir -p /shared
-    sudo mount ${NFS-10.139.154.226:/shared} /shared
+    sudo mount ${NFS-10.169.174.138:/share} /shared
     sudo chmod go+rw /shared
     df -h --type=nfs
     mkdir -p "/shared/$TAG"
@@ -48,16 +48,16 @@ else
     mkdir -p models
 fi
 
-curl -o shutdown.sh -q https://raw.githubusercontent.com/alvp/alberti-template/master/shutdown.sh
+curl -o shutdown.sh -q https://raw.githubusercontent.com/alvp/alberti-template/main/shutdown.sh
 chmod +x shutdown.sh
 
 if [ -n "${SCRIPT}" ]; then
     case "${SCRIPT}" in
     stanzas)
         say @b"Downloading stanzas-evaluation scripts" @reset
-        curl -o clean-checkpoints.sh -q https://raw.githubusercontent.com/alvp/alberti-template/master/clean-checkpoints.sh
+        curl -o clean-checkpoints.sh -q https://raw.githubusercontent.com/alvp/alberti-template/main/clean-checkpoints.sh
         chmod +x clean-checkpoints.sh
-        curl -o stanzas-evaluation.py -q https://raw.githubusercontent.com/alvp/alberti-template/master/stanzas-evaluation.py
+        curl -o stanzas-evaluation.py -q https://raw.githubusercontent.com/alvp/alberti-template/main/stanzas-evaluation.py
         chmod +x stanzas-evaluation.py
         byobu new-session -d -s "alberti" "watch -n 1 nvidia-smi"
         byobu new-window -t "alberti" "TAG=${TAG} MODELNAME=\"${ST_MODELNAME}\" OVERWRITE=${ST_OVERWRITE} python -W ignore stanzas-evaluation.py 2>&1 | tee -a \"runs/$(date +\"%Y-%m-%dT%H%M%S\").log\""

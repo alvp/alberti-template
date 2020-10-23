@@ -62,8 +62,7 @@ def prepare_data():
         )
     )
     label_encoder = LabelEncoder()
-    label_encoder.fit(df["stanza"])
-    df["labels"] = label_encoder.transform(df["stanza"])
+    df["labels"] = label_encoder.fit_transform(df["stanza"])
     train_df, eval_df = train_test_split(
         df, stratify=df["labels"], test_size=0.25, random_state=42
     )
@@ -95,7 +94,7 @@ def train_model(train_df, num_labels):
             'wandb_project': model_output.split("/")[-1],
             # "adam_epsilon": 3e-5,  # 1e-8
             "silent": False,
-            "fp16": False,
+            "fp16": False,  # By default it uses 32 bit floating point
             "n_gpu": 1,
     })
     # train the model
