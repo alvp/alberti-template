@@ -106,7 +106,7 @@ def eval_model(model, eval_df, run):
     result, *_ = model.eval_model(eval_df)
     logging.info("Results: {}".format(str(result)))
 
-    eval_df["predicted"], *_ = model.predict(eval_df["text"])
+    eval_df["predicted"], *_ = model.predict(eval_df["text"].values)
 
     acc = sum(eval_df.labels == eval_df.predicted) / eval_df.labels.size
     logging.info("Accuracy: {}".format(acc))
