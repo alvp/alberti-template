@@ -81,7 +81,7 @@ def train_model(train_df, num_labels):
     model = ClassificationModel(
         model_type, model_name, num_labels=num_labels, args={
             'output_dir': model_output,
-            'overwrite_output_dir': True,
+            'overwrite_output_dir': OVERWRITE,
             'best_model_dir': '{}/best'.format(model_output),
             'evaluate_during_training': False,
             'manual_seed': 42,
