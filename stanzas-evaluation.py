@@ -57,8 +57,8 @@ def prepare_data():
         .read_csv('/shared/evaluation-final.csv')
         .rename(columns={"Stanza_text": "text", "ST_Correct": "stanza"})
         .assign(
-            text=lambda x: x["text"].apply(clean_text(x)),
-            stanza=lambda x: x["stanza"].apply(clean_labels(x)),
+            text=lambda x: x["text"].apply(clean_text),
+            stanza=lambda x: x["stanza"].apply(clean_labels),
         )
     )
     label_encoder = LabelEncoder()
