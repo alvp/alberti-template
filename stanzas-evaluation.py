@@ -84,13 +84,15 @@ def train_model(train_df, num_labels):
             'best_model_dir': '{}/best'.format(model_output),
             'evaluate_during_training': False,
             'manual_seed': 42,
+            'num_train_epochs': 4,
             # 'learning_rate': 2e-5,  # For BERT, 5e-5, 3e-5, 2e-5
             # For BERT 16, 32. It could be 128, but with gradient_acc_steps set to 2 is equivalent
             'train_batch_size': 8 if "large" in model_name else 32,
             'eval_batch_size': 8 if "large" in model_name else 32,
             # Doubles train_batch_size, but gradients and weights are calculated once every 2 steps
             'gradient_accumulation_steps': 2 if "large" in model_name else 1,
-            'max_seq_length': 64,
+            'max_seq_length': 256,
+            'sliding_window': True,
             'wandb_project': model_output.split("/")[-1],
             # "adam_epsilon": 3e-5,  # 1e-8
             "silent": False,
